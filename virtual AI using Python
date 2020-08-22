@@ -1,0 +1,56 @@
+import pyttsx3
+import speech_recognition as sr
+import datetime
+import wikipedia
+import webbrowser
+import os
+import smtplib
+
+master = "krishna"
+print("Initializing Jarvis")
+3
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice',voices[0].id)
+
+#Speak Function
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+def wishme():
+    
+    hour = int(datetime.datetime.now().hour)
+    #print(hour)
+    if hour >= 0 and hour <12: 
+        speak("Good Morning"+ master)
+
+    elif hour >=12 and hour <= 18:
+        speak("Good Afternoon" + master)
+    
+    else:
+        speak("Good Evening"+master)
+    
+    speak("How may I help you?")
+
+def takecommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Say something!")
+        audio = r.listen(source)
+ 
+# Speech recognition using Google Speech Recognition
+    try:
+    # for testing purposes, we're just using the default API key
+    # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+    # instead of `r.recognize_google(audio)`
+        print("You said: " + r.recognize_google(audio))
+    except sr.UnknownValueError:
+        print("Google Speech Recognition could not understand audio")
+    except sr.RequestError as e:
+        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+
+#MAIN FUNCTION
+speak("Hello Welcome to Jarvis")    
+wishme()
+takecommand()
