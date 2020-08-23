@@ -1,0 +1,8 @@
+import speech_recognition as sr
+print(sr.__version__) # just to print the version not required
+r = sr.Recognizer()
+my_mic = sr.Microphone()
+with my_mic as source:
+    print("Say now!!!!")
+    audio = r.listen(source)
+print(r.recognize_google(audio))
