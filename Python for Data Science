@@ -1,0 +1,287 @@
+x#!/usr/bin/env python
+# coding: utf-8
+
+# # Weather Data Analysis
+
+# Weather DataSet Importation
+
+# In[2]:
+
+
+import pandas as pd
+
+
+# In[3]:
+
+
+data = pd.read_csv("/Users/krishnakanth/Documents")
+
+
+# In[5]:
+
+
+data = pd.read_csv(r"/Users/krishnakanth/Documents/1. Weather Data.csv")
+
+
+# In[6]:
+
+
+data
+
+
+# # How to Analyse Dataframes
+
+# In[8]:
+
+
+data.head() #to show first 5 rows
+
+
+# In[10]:
+
+
+data.shape #to show no of columns and rows
+
+
+# In[11]:
+
+
+data.index #to show the indices
+
+
+# In[12]:
+
+
+data.columns #to see the name of each columns
+
+
+# In[13]:
+
+
+data.dtypes #to print datatypes of each columns
+
+
+# In[17]:
+
+
+data['Weather'].unique() #to print unique values
+
+
+# In[18]:
+
+
+data.nunique() #to print number of unique values per columns
+
+
+# In[19]:
+
+
+data.count() #to print number of non null values
+
+
+# In[21]:
+
+
+data['Weather'].value_counts() #prints count of each unique value in a desired column
+
+
+# In[22]:
+
+
+data.info()#to get all information about the dataframe
+
+
+# # 1.Find all the unique 'wind speed' values in the data
+
+# In[54]:
+
+
+data['Wind Speed_km/h'].nunique()
+#if there is any space in between the column name then we'll use [] else no need
+
+
+# In[25]:
+
+
+data['Wind Speed_km/h'].unique()
+
+
+# # 2.Find the number of times when the weather is clear
+
+# In[26]:
+
+
+#value_counts()
+data.Weather.value_counts()
+
+
+# In[28]:
+
+
+#filtering
+data.Weather=='Clear'
+
+
+# In[29]:
+
+
+#filtering to work on particular command
+data[data.Weather=='Clear']
+
+
+# In[31]:
+
+
+#groupby() used to get a particular group
+data.groupby('Weather').get_group('Clear')
+
+
+# # 3. Find the number of times when the 'Wind speed was exactly 4km/h'
+
+# In[38]:
+
+
+data[data['Wind Speed_km/h']==4]
+
+
+# # 4.Find out the NULL Values in the data
+
+# In[39]:
+
+
+#isnull() used to show the null values in boolean
+data.isnull()
+
+
+# In[40]:
+
+
+data.isnull().sum()
+
+
+# In[42]:
+
+
+#notnull() used to check the not null values
+data.notnull().sum()
+
+
+# # Renaming the Column
+
+# In[45]:
+
+
+#rename() to rename columns but changes are not made the dataframe
+data.rename(columns={'Weather':'Weather Condition'})
+
+
+# # To Rename permanently
+
+# In[46]:
+
+
+#rename() to rename columns but changes are not made the dataframe
+data.rename(columns={'Weather':'Weather Condition'},inplace = True)
+
+
+# In[47]:
+
+
+data.head()
+
+
+# # Mean of Visibility Column
+
+# In[48]:
+
+
+data.Visibility_km.mean()
+
+
+# # Standard Deviation of Pressure Column
+
+# In[53]:
+
+
+#std() is the fn used to find standard deviation
+data.Press_kPa.std()
+
+
+# # Variance of Relative humidity 
+
+# In[57]:
+
+
+data['Rel Hum_%'].var()
+
+
+# # Find All the instances when snow was recorded
+
+# In[64]:
+
+
+data['Weather Condition'].value_counts()
+
+
+# In[67]:
+
+
+#filtering
+data[data['Weather Condition']=='Snow']
+
+
+# # Find all the instances when Wind Speed is above 24 & Visibilty is 25
+
+# In[72]:
+
+
+data[(data['Wind Speed_km/h']>24)&(data['Visibility_km']==25)]
+
+
+# # Mean value of each column
+
+# In[73]:
+
+
+data.groupby('Weather Condition').mean()
+
+
+# # Min and Max of each column against Weather Condition
+
+# In[78]:
+
+
+data.groupby('Weather Condition').min()
+
+
+# In[79]:
+
+
+data.groupby('Weather Condition').max()
+
+
+# In[82]:
+
+
+data[data['Weather Condition']=='Fog']
+
+
+# # Find all the instances when 'Weather is Clear' or 'Visibility is above 40'
+
+# In[89]:
+
+
+data[(data['Weather Condition']=='Clear')|(data['Visibility_km']>40)]
+
+
+# In[93]:
+
+
+data[(data['Weather Condition']== 'Clear')&(data['Rel Hum_%']>50)|(data['Visibility_km']>40)]
+
+
+# In[ ]:
+
+
+
+
